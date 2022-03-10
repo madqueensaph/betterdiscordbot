@@ -5,7 +5,7 @@
  */
 
 /* initalize dotenv, basically the same as reading from a text file tbh */
-require('dotenv').config({path: `${__dirname}/../.env`});
+require('dotenv').config({path: __dirname + '/../.env'});
 
 /* import external stuff */
 import * as utils from './utilities';
@@ -69,7 +69,7 @@ client.on('messageCreate', async msg => {
       break;
   }
 
-  if(logOutput != undefined) utils.log(`${msg.author.tag} used ${msgItems[0]}...` + logOutput, logFile);
+  if(logOutput != undefined) utils.log(msg.author.tag + ' used' + msgItems[0] + '...' + logOutput, logFile);
 });
 
 /* handle exit signals */

@@ -20,7 +20,7 @@ function getTimeString() {
     var minute = ('00' + datetime.getUTCMinutes()).slice(-2);
     var second = ('00' + datetime.getUTCSeconds()).slice(-2);
     /* print the time to  */
-    return "".concat(year, "-").concat(month, "-").concat(date, " ").concat(hour, ":").concat(minute, ":").concat(second);
+    return year + '-' + month + '-' + date + ' ' + hour + ':' + minute + ':' + second;
 }
 /* nobody wants to see logging shit 500 times */
 function log(content, logFile) {

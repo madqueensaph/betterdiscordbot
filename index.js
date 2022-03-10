@@ -42,7 +42,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 exports.__esModule = true;
 /* initalize dotenv, basically the same as reading from a text file tbh */
-require('dotenv').config({ path: "".concat(__dirname, "/../.env") });
+require('dotenv').config({ path: __dirname + '/../.env' });
 /* import external stuff */
 var utils = require("./utilities");
 var msgCmds = require("./message-commands");
@@ -98,7 +98,7 @@ client.on('messageCreate', function (msg) { return __awaiter(void 0, void 0, voi
                 break;
         }
         if (logOutput != undefined)
-            utils.log("".concat(msg.author.tag, " used ").concat(msgItems[0], "...") + logOutput, logFile);
+            utils.log(msg.author.tag + ' used' + msgItems[0] + '...' + logOutput, logFile);
         return [2 /*return*/];
     });
 }); });

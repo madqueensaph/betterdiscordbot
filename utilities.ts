@@ -21,7 +21,7 @@ function getTimeString() {
   var second = ('00' + datetime.getUTCSeconds()).slice(-2);
 
   /* print the time to  */
-  return `${year}-${month}-${date} ${hour}:${minute}:${second}`;
+  return year + '-' + month + '-' + date + ' ' + hour + ':' + minute + ':' + second;
 }
 
 /* nobody wants to see logging shit 500 times */
