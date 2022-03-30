@@ -65,17 +65,29 @@ intents.add(Discord.Intents.FLAGS.GUILDS, Discord.Intents.FLAGS.GUILD_MESSAGES);
 var client = new Discord.Client({ intents: intents });
 /* when client is connected, it will output a thing */
 client.on('ready', function () {
+    var botUser = client.user;
+    if (botUser === null)
+        return;
     utils.log('==================================================', logFile);
-    utils.log('logged in as "' + client.user.tag + '"', logFile);
+    utils.log('logged in as "' + botUser.tag + '"', logFile);
     utils.log('-------------------------', logFile);
 });
 /* do a thing if the content of a user message matches */
 client.on('messageCreate', function (msg) { return __awaiter(void 0, void 0, void 0, function () {
     var logOutput, content, msgItems, returns, vals;
-    return __generator(this, function (_a) {
+    var _a, _b;
+    return __generator(this, function (_c) {
         /* if the message is from the bot, ignore it */
         if (msg.author === client.user)
             return [2 /*return*/];
+        switch (msg.channel.type) {
+            case 'GUILD_TEXT':
+                if (msg.channel.name !== 'breaknbreak')
+                    return [2 /*return*/];
+                break;
+            default:
+                break;
+        }
         logOutput = undefined;
         content = msg.content.toLowerCase();
         msgItems = content.split(' ');
@@ -90,7 +102,8 @@ client.on('messageCreate', function (msg) { return __awaiter(void 0, void 0, voi
                 logOutput = "OK";
                 break;
             case "!roll":
-                vals = msgCmds.rollRNG(msgItems[1], msg.member.displayName || msg.author.username);
+                vals = msgCmds.rollRNG(msgItems[1], ((_a = msg.member) === null || _a === void 0 ? void 0 : _a.displayName) || msg.author.username);
+                console.log((_b = msg.member) === null || _b === void 0 ? void 0 : _b.displayName);
                 msg.channel.send({ embeds: [vals.embed] });
                 logOutput = vals.logStr;
                 break;
@@ -98,7 +111,7 @@ client.on('messageCreate', function (msg) { return __awaiter(void 0, void 0, voi
                 break;
         }
         if (logOutput != undefined)
-            utils.log(msg.author.tag + ' used' + msgItems[0] + '...' + logOutput, logFile);
+            utils.log(msg.author.tag + ' used ' + msgItems[0] + '...' + logOutput, logFile);
         return [2 /*return*/];
     });
 }); });

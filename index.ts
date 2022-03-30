@@ -36,8 +36,11 @@ const client:Discord.Client = new Discord.Client({intents: intents});
 
 /* when client is connected, it will output a thing */
 client.on('ready', () => {
+  var botUser = client.user;
+  if(botUser === null) return;
+
   utils.log('==================================================', logFile);
-  utils.log('logged in as "' + client!.user.tag + '"', logFile);
+  utils.log('logged in as "' + botUser.tag + '"', logFile);
   utils.log('-------------------------', logFile);
 });
 
@@ -45,6 +48,14 @@ client.on('ready', () => {
 client.on('messageCreate', async msg => {
   /* if the message is from the bot, ignore it */
   if(msg.author === client.user) return;
+
+  switch(msg.channel.type) {
+      case 'GUILD_TEXT':
+        if(msg.channel.name !== 'breaknbreak') return;
+        break;
+      default:
+        break;
+  }
 
   var logOutput = undefined;
   var content = msg.content.toLowerCase();
@@ -61,7 +72,8 @@ client.on('messageCreate', async msg => {
       logOutput = `OK`;
       break;
     case "!roll":
-      var vals = msgCmds.rollRNG(msgItems[1], msg!.member.displayName || msg.author.username);
+      var vals = msgCmds.rollRNG(msgItems[1], msg.member?.displayName || msg.author.username);
+      console.log(msg.member?.displayName);
       msg.channel.send({embeds: [vals.embed]});
       logOutput = vals.logStr;
       break;
@@ -69,7 +81,7 @@ client.on('messageCreate', async msg => {
       break;
   }
 
-  if(logOutput != undefined) utils.log(msg.author.tag + ' used' + msgItems[0] + '...' + logOutput, logFile);
+  if(logOutput != undefined) utils.log(msg.author.tag + ' used ' + msgItems[0] + '...' + logOutput, logFile);
 });
 
 /* handle exit signals */
